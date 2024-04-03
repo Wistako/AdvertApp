@@ -5,7 +5,7 @@ const getImageFileType = require('../utils/getImageFileType');
 // get all ads
 exports.getAllAds = async (req, res) => {
   try {
-    const ads = await Advert.find();
+    const ads = await Advert.find().populate('user', '-password');
     res.json(ads);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -43,7 +43,7 @@ exports.createAd = async (req, res) => {
       price,
       location,
       user: id,
-      image: req.file.path
+      image: req.file.filename
     }
     const ad = new Advert(data);
     try {
@@ -81,7 +81,7 @@ exports.updateAd = async (req, res) => {
     }
     if(['image/png', 'image/gif', 'image/jpeg'].includes(fileType)){
       fs.unlinkSync(ad.image);
-      ad.image = req.file.path;
+      ad.image = req.file.filename;
     }
     ad.title = req.body.title;
     ad.content = req.body.content;
