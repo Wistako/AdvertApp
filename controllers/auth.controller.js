@@ -50,8 +50,8 @@ exports.login = async (req, res) => {
       }
       else {
         if(bcrypt.compareSync(password, user.password)){
-          req.session.user = {user : user.login, id: user._id };
-          res.status(200).send({ message: 'Login successful', session: req.session });
+          req.session.user = {login, id: user._id};
+          res.status(200).send({ message: 'Login successful', user: {login, id: user._id}});
         }
         else {
           res.status(400).send({ message: 'Login or password are incorrect' });
@@ -70,11 +70,12 @@ exports.login = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-  if(process.env.NODE_ENV !== 'production'){
+  if(process.env.NODE_ENV === 'production'){
   req.session.destroy();
   res.status(200).send({ message: 'Logged out' });
-  } else {
-    await Session.deleteMany();
+} else {
+  await Session.deleteMany();
+    req.session.destroy();
     res.status(200).send({ message: 'Logged out' });
   }
 };

@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const Advert = require('../models/Advert.model');
 const getImageFileType = require('../utils/getImageFileType');
 
@@ -80,7 +81,7 @@ exports.updateAd = async (req, res) => {
       return res.status(403).json({ message: 'Forbidden' });
     }
     if(['image/png', 'image/gif', 'image/jpeg'].includes(fileType)){
-      fs.unlinkSync(ad.image);
+      fs.unlinkSync(path.join(__dirname, '../public/uploads/', ad.image));
       ad.image = req.file.filename;
     }
     ad.title = req.body.title;
@@ -108,7 +109,7 @@ exports.deleteAd = async (req, res) => {
     if(req.session.user.id != ad.user._id){
       return res.status(403).json({ message: 'Forbidden', sessionId: req.session.user.id, adUserId: ad.user._id});
     }
-    fs.unlinkSync(ad.image);
+    fs.unlinkSync(path.join(__dirname, '../public/uploads/', ad.image));
     await ad.deleteOne({ _id: req.params.id });
     res.json({ message: 'Ad deleted' });
   } catch (error) {
@@ -120,8 +121,10 @@ exports.deleteAd = async (req, res) => {
 exports.searchAds = async (req, res) => {
   try {
     const ads = await Advert.find({
-      title: { $regex: req.params.searchPhrase, $options: 'i' },
-      content: { $regex: req.params.searchPhrase, $options: 'i' },
+      $or: [
+        { title: {$regex: req.params.searchPhrase, $options: 'i'} },
+        { content: { $regex: req.params.searchPhrase, $options: 'i'} }
+      ]
     });
     res.json(ads);
   } catch (error) {
