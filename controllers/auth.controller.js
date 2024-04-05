@@ -81,5 +81,8 @@ exports.logout = async (req, res) => {
 };
 
 exports.getUser = (req, res) => {
+  if(!req.session.user){
+    return res.status(204).send({ message: 'Unauthorized' });
+  }
   res.send(req.session.user);
 };
