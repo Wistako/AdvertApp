@@ -1,0 +1,21 @@
+.header {
+  padding: 1rem 2rem;
+  background-color: #333;
+  
+  a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: semi-bold;
+    margin-right: 1rem;
+    &:hover {
+      color: #f1356d;
+    }
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

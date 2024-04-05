@@ -1,0 +1,19 @@
+.root {
+  > * {
+    margin-left: 12px;
+  }
+
+  input {
+    border-radius: 6px;
+    outline: none;
+    border: none;
+    padding: 2px 8px;
+  }
+
+  button {
+    border-radius: 6px;
+    outline: none;
+    border: none;
+    padding: 2px 8px;
+  }
+}

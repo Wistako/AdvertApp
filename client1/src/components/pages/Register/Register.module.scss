@@ -1,0 +1,51 @@
+.form { 
+  width: 380px;
+  margin: 0 auto;
+  text-align: center;
+
+  > div {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    
+    label {
+      text-align: left;
+      margin-bottom: 5px;
+    }
+    input {
+      border: 1px solid #272727;
+      border-radius: 6px;
+      padding: 4px 8px;
+      line-height: 22px;
+    }
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #272727;
+    color: #fff;
+    outline: none;
+    border: 1px solid #000;
+    border-radius: 12px;
+  }
+}
+
+.success, .danger, .warning {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
+  background-color: #272727;
+}
+
+.success {
+  color :#28a745;
+}
+
+.danger {
+  color: 	#e54141;
+}
+.warning {
+  color: 	#efef8d;
+}
