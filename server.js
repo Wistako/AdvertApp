@@ -40,10 +40,10 @@ app.use('/api/ads', require('./routes/ads.routes'));
 app.use('/auth', require('./routes/auth.routes'));
 // app.use('/auth', require('./routes/users.routes'));
 
+app.get((req, res) => {
+  res.status(404).send({ message: 'Not found'});
+});
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
 
-app.get((req, res) => {
-  res.status(404).send({ message: 'Not found'});
-});

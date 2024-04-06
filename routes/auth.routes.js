@@ -7,6 +7,6 @@ const imageUpload = require('../utils/imageUpload');
 router.post('/register', imageUpload.single('avatar'), auth.register);
 router.post('/login', auth.login);
 router.delete('/logout', authMiddleware, auth.logout);
-router.get('/user', auth.getUser);
+router.get('/user',authMiddleware, auth.getUser);
 
 module.exports = router;

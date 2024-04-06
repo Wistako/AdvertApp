@@ -22,7 +22,10 @@ function App() {
 
   useEffect(() => {
     const login = async () => {
-      const res = await fetch(`${API_URL}/auth/user`);
+      const res = await fetch(`${API_URL}/auth/user`, {
+        credentials: 'include',
+        method: 'GET',
+      });
       if (res.status === 200) {
         const user = await res.json();
         dispatch(logIn(user));
