@@ -14,8 +14,7 @@ const Register = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     setStatus('loading');
     
     const fd = new FormData();
