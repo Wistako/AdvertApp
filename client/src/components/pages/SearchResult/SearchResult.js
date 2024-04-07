@@ -6,6 +6,7 @@ import { getRequest, getSearchResult, searchAdvert, searchAdvertRequest } from '
 import Container from '../../common/Container/Container';
 import { Navigate } from 'react-router-dom';
 import AdsCard from '../../common/AdsCard/AdsCard';
+import { Oval } from 'react-loader-spinner';
 
 const SearchResult = () => {
   const { searchPhrase } = useParams();
@@ -25,14 +26,18 @@ const SearchResult = () => {
 
   return (
     <Container>
-      {request.pending && <div>Loading...</div>}
+      {request.pending && 
+        <div className={style.loading}>
+          <Oval visible={true} height={80} width={80} color='#4fa94d' ariaLabel='oval-loading' />  
+        </div>
+      }
       {request.error && <div>Error: {request.error}</div>}
       {result && (
         <div className={style.grid}>
           {result.map(advert => (<AdsCard key={advert._id} ad={advert} />))}
         </div>
       )}
-      {result && result.length === 0 && <div>No results found</div>}
+      {result && result.length === 0 && <div className={style.empty}>No results found</div>}
     </Container>
   );
 };

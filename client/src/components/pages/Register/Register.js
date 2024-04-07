@@ -2,6 +2,8 @@ import style from './Register.module.scss';
 import { useState } from 'react';
 import { API_URL } from '../../../config';
 import Container from '../../common/Container/Container';
+import { Oval } from 'react-loader-spinner';
+import { useForm } from 'react-hook-form';
 
 const Register = () => {
   const [login, setLogin] = useState('');
@@ -10,7 +12,9 @@ const Register = () => {
   const [avatar, setAvatar] = useState(null);
   const [status, setStatus] = useState(null); // loading, success, serverError, clientError, loginError 
 
-  const handleSubmit = (e) => {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const onSubmit = (e) => {
     e.preventDefault();
     setStatus('loading');
     
@@ -45,7 +49,7 @@ const Register = () => {
 
   return (
     <Container>
-      <form onSubmit={handleSubmit} className={style.form}>
+      <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
         <h1>Sign up</h1>
         <div className={style.info}>
           {status === 'success' && ( 
@@ -73,30 +77,61 @@ const Register = () => {
             </div>
           )}
           {status === 'loading' && (
-            <div className={style.spinner}>
-              <p>Loading...</p>
-              <div className={style.bounce1}></div>
-              <div className={style.bounce2}></div>
-              <div className={style.bounce3}></div>
-            </div>      
+            <div className={style.loading}>
+              <Oval visible={true} height={80} width={80} color='#4fa94d' ariaLabel='oval-loading' />  
+            </div>  
           )}
         </div>
 
         <div>
           <label htmlFor="username">Username</label>
-          <input type="text" value={login} onChange={e => setLogin(e.target.value)} id="username" name="username" placeholder='Username'/>
+          <input
+            {...register('username', { required: true, minLength: 5, maxLength: 20})}
+            type="text" 
+            value={login} 
+            onChange={e => setLogin(e.target.value)} 
+            id="username" 
+            name="username" 
+            placeholder='Username'
+          />
+          {errors.username && <p className={style.error}>Username must be between 5 and 20 characters</p>}
         </div>
         <div>
           <label htmlFor="password">Password</label>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} id="password" name="password" placeholder='Password'/>
+          <input 
+            {...register('password', { required: true, minLength: 5, maxLength: 20})}
+            type="password" 
+            value={password} 
+            onChange={e => setPassword(e.target.value)} 
+            id="password" 
+            name="password" 
+            placeholder='Password'
+          />
+          {errors.password && <p className={style.error}>Password must be between 5 and 20 characters</p>}
         </div>
         <div>
           <label htmlFor='phone'>Phone</label>
-          <input type='tel' value={phone} onChange={e => setPhone(e.target.value)} id='phone' name='phone' placeholder='Tel' />
+          <input 
+            {...register('phone', { required: true, minLength: 9, maxLength: 9})}
+            type='tel' 
+            value={phone} 
+            onChange={e => setPhone(e.target.value)} 
+            id='phone' 
+            name='phone' 
+            placeholder='Tel' 
+          />
+          {errors.phone && <p className={style.error}>Phone must have 9 digits</p>}
         </div>
         <div>
           <label htmlFor='avatar'>Avatar</label>
-          <input type='file' id='avatar' name='avatar' onChange={e => setAvatar(e.target.files[0])} />
+          <input 
+            {...register('avatar', { required: true})}
+            type='file' 
+            id='avatar' 
+            name='avatar' 
+            onChange={e => setAvatar(e.target.files[0])} 
+          />
+          {errors.avatar && <p className={style.error}>Avatar is required</p>}
         </div>
         <button type="submit">Register</button>
       </form>

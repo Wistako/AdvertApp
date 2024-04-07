@@ -12,7 +12,7 @@ const connectToDB = () => {
 
   // on succes
   db.once('open', () => {
-    console.log('Connected to the database with URI ' + dbURI);
+    console.log('Connected to the database successfully');
   });
 
   // on error

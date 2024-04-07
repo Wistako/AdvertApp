@@ -32,6 +32,12 @@
   }
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .success, .danger, .warning {
   padding: 10px;
   margin: 10px 0;

@@ -5,6 +5,7 @@ import { API_URL } from '../../../config';
 import { useDispatch } from 'react-redux';
 import { logIn } from '../../../redux/userRedux';
 import { useNavigate } from 'react-router-dom';
+import { Oval } from 'react-loader-spinner';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,8 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setStatus('loading');
+    
     const options = {
       method: 'POST',
       headers: {
@@ -68,11 +70,9 @@ const Login = () => {
             </div>
           )}
           {status === 'loading' && (
-            <div className={style.spinner}>
-              <div className={style.bounce1}></div>
-              <div className={style.bounce2}></div>
-              <div className={style.bounce3}></div>
-            </div>      
+            <div className={style.loading}>
+              <Oval visible={true} height={80} width={80} color='#4fa94d' ariaLabel='oval-loading' />  
+            </div>   
           )}
         </div>
         

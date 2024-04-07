@@ -19,7 +19,9 @@
 }
 
 .title {
-  text-align: center;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .info {
@@ -33,21 +35,28 @@
     justify-content: center;
     align-items: center;
     height: 50%;
+    width: 104px;
     padding: 8px 16px;
     color: #f5f5f5;
     background-color: #333333;
     border: 1px solid #000;
     border-radius: 10px;
+
     &:hover {
       background-color: #f1356d;
       border: 1px solid #f1356d;
     }
   }
+  
+  > div {
+    max-width: calc(100% - 104px);
+  }
 
   p {
     margin: 0;
     text-align: left;
-
+    overflow: hidden;
+    text-overflow: ellipsis;
     span {
       font-weight: 500;
     }

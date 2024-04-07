@@ -21,11 +21,14 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const options = {
+      method: 'GET',
+    }
+    if(process.env.NODE_ENV === 'production') {
+      options.credentials = 'include';
+    }
     const login = async () => {
-      const res = await fetch(`${API_URL}/auth/user`, {
-        credentials: 'include',
-        method: 'GET',
-      });
+      const res = await fetch(`${API_URL}/auth/user`, options);
       if (res.status === 200) {
         const user = await res.json();
         dispatch(logIn(user));

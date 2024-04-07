@@ -65,18 +65,17 @@ exports.createAd = async (req, res) => {
 exports.updateAd = async (req, res) => {
   const { title, content, price, location } = req.body;
   if (!title || !content || !price || !location) {
-    fs.unlinkSync(req.file.path)
+    if(req.file)
+      fs.unlinkSync(req.file.path)
     return res.status(400).json({ message: 'Invalid data' });
   }
   try {
     const ad = await Advert.findById(req.params.id).populate('user');
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
-    if (!ad) {
-      fs.unlinkSync(req.file.path)
-      return res.status(404).json({ message: 'Ad not found' });
-    }
+
     // Jeśli użytkownik nie jest właścicielem ogłoszenia
-    if(req.session.user.id != ad.user._id){
+    if(req.session.user.id != ad.user._id || !ad){
+      if(req.file)
       fs.unlinkSync(req.file.path)
       return res.status(403).json({ message: 'Forbidden' });
     }
@@ -93,6 +92,7 @@ exports.updateAd = async (req, res) => {
     const updatedAd = await ad.save();
     res.json(updatedAd);
   } catch (error) {
+    if(req.file)
     fs.unlinkSync(req.file.path)
     res.status(400).json({ message: error.message });
   }

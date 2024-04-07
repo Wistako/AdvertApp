@@ -32,6 +32,12 @@
   }
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .success, .danger, .warning {
   padding: 10px;
   margin: 10px 0;
@@ -46,6 +52,12 @@
 .danger {
   color: 	#e54141;
 }
+
 .warning {
   color: 	#efef8d;
+}
+
+.error {
+  margin: 10px 0;
+  color: #e54141;
 }

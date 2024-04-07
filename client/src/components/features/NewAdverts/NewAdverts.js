@@ -4,13 +4,18 @@ import AdsCard from "../../common/AdsCard/AdsCard";
 import style from "./NewAdverts.module.scss";
 import { Link } from "react-router-dom";
 import { getUser } from "../../../redux/userRedux";
+import { Oval } from 'react-loader-spinner';
 
 const NewAdverts = () => {
   const adverts = useSelector(state => getAdverts(state));
   const request = useSelector(state => getRequest(state));
   const user = useSelector(state => getUser(state));
 
-  if (request.pending) return <p>Loading...</p>;
+  if (request.pending) 
+    return 
+    <div className={style.loading}>
+      <Oval visible={true} height={80} width={80} color='#4fa94d' ariaLabel='oval-loading' />  
+    </div>;
   if (request.error) return <p>Error</p>;
 
   return (
